@@ -1,0 +1,112 @@
+{
+  "format": "parametric-trim-definition/v1",
+  "name": "cylinder-letter-I-before-drag",
+  "createdAt": "2026-11-25T00:00:00Z",
+  "surface": {
+    "type": "cylinder",
+    "radius": 2,
+    "height": 2.4,
+    "periodicU": true
+  },
+  "parameterDomain": {
+    "uMin": 0,
+    "uMax": 1,
+    "vMin": 0,
+    "vMax": 1
+  },
+  "seam": {
+    "u": 0,
+    "twinU": 1
+  },
+  "orientationPolicy": "outer CCW, holes CW after normalization; even-odd nesting parity; self-intersecting loops are rejected",
+  "periodicEdgePolicy": "u-period=1; canonical jumps longer than 0.5 are unwrapped by the shortest periodic delta, then split-at-seam in canonical UV and traced across the lifted seam",
+  "outer": {
+    "id": "outer-domain",
+    "role": "outer",
+    "points": [
+      {
+        "u": 0,
+        "v": 0
+      },
+      {
+        "u": 1,
+        "v": 0
+      },
+      {
+        "u": 1,
+        "v": 1
+      },
+      {
+        "u": 0,
+        "v": 1
+      }
+    ]
+  },
+  "holes": [
+    {
+      "id": "letter-I-hole",
+      "role": "hole",
+      "letter": "I",
+      "points": [
+        {
+          "u": 0.88,
+          "v": 0.26
+        },
+        {
+          "u": 0.1200000000000001,
+          "v": 0.26
+        },
+        {
+          "u": 0.1200000000000001,
+          "v": 0.342
+        },
+        {
+          "u": 0.03750000000000009,
+          "v": 0.342
+        },
+        {
+          "u": 0.03750000000000009,
+          "v": 0.698
+        },
+        {
+          "u": 0.1200000000000001,
+          "v": 0.698
+        },
+        {
+          "u": 0.1200000000000001,
+          "v": 0.78
+        },
+        {
+          "u": 0.88,
+          "v": 0.78
+        },
+        {
+          "u": 0.88,
+          "v": 0.698
+        },
+        {
+          "u": 0.9625,
+          "v": 0.698
+        },
+        {
+          "u": 0.9625,
+          "v": 0.342
+        },
+        {
+          "u": 0.88,
+          "v": 0.342
+        }
+      ]
+    }
+  ],
+  "editHandles": {
+    "dragEdge": {
+      "contourId": "letter-I-hole",
+      "edgeIndex": 3,
+      "meaning": "right stem edge; starts across seam from left stem edge and is dragged exactly to u=0",
+      "beforeLiftU": 0.0375,
+      "afterLiftU": 0
+    }
+  },
+  "phase": "before"
+}

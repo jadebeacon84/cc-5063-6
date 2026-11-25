@@ -1,0 +1,725 @@
+{
+  "schema": "parametric-trim-delivery-report/v1",
+  "generatedAt": "2026-11-25T13:35:03.668Z",
+  "policies": {
+    "orientation": "outer CCW and holes CW after normalization; even-odd nesting parity",
+    "selfIntersection": "reject; no automatic repair or full-surface export",
+    "periodicEdges": "canonical UV jumps longer than 0.5 use shortest periodic unwrap before densification; near-seam rings are split canonically and traced in lifted coordinates",
+    "seam": "u=0 and u=1 are periodic identities welded once; screen-projection coincidences are never welded",
+    "classification": "boolean effective polygons + earcut boundary triangulation + ray parity and area cross-validation"
+  },
+  "seamDrag": {
+    "description": "Capital I stem edges begin at u=0.9625 and u=0.0375 across the seam; the positive-side edge is dragged to u=0.",
+    "before": {
+      "ok": true,
+      "phase": "before",
+      "holeCount": 1,
+      "counts": {
+        "definedHoles": 1,
+        "topologicalHoles": 1,
+        "canonicalPolygons": 1,
+        "canonicalRings": 1
+      },
+      "stats": {
+        "sourceVertexCount": 9537,
+        "spatialVertexCount": 9471,
+        "triangleCount": 18432,
+        "periodicPairCount": 66,
+        "weldCount": 66,
+        "projectionOnlyPairCount": 6,
+        "boundaryEdgeCount": 640,
+        "degenerateWeldFaceCount": 0
+      },
+      "seamReport": {
+        "hole": {
+          "touchesSeam": true,
+          "crossingCount": 2,
+          "canonicalStrategy": "split-at-seam",
+          "periodicStrategy": "trace-across-seam",
+          "seamEdgeCount": 0
+        }
+      },
+      "identity": {
+        "periodicPairCount": 66,
+        "weldCount": 66,
+        "redundantWeldCount": 0,
+        "projectionOnlyPairCount": 6,
+        "periodicPairs": [
+          {
+            "a": 0,
+            "b": 1,
+            "key": "periodic-u:0.0000000",
+            "distance": 0
+          },
+          {
+            "a": 11,
+            "b": 10,
+            "key": "periodic-u:1.0000000",
+            "distance": 0
+          },
+          {
+            "a": 12,
+            "b": 9,
+            "key": "periodic-u:0.7800000",
+            "distance": 0
+          },
+          {
+            "a": 19,
+            "b": 2,
+            "key": "periodic-u:0.2600000",
+            "distance": 0
+          },
+          {
+            "a": 21,
+            "b": 25,
+            "key": "periodic-u:0.1300000",
+            "distance": 0
+          },
+          {
+            "a": 38,
+            "b": 34,
+            "key": "periodic-u:0.8900000",
+            "distance": 0
+          },
+          {
+            "a": 61,
+            "b": 76,
+            "key": "periodic-u:0.1950000",
+            "distance": 0
+          },
+          {
+            "a": 64,
+            "b": 73,
+            "key": "periodic-u:0.0650000",
+            "distance": 0
+          },
+          {
+            "a": 114,
+            "b": 105,
+            "key": "periodic-u:0.9450000",
+            "distance": 0
+          },
+          {
+            "a": 117,
+            "b": 102,
+            "key": "periodic-u:0.8350000",
+            "distance": 0
+          },
+          {
+            "a": 198,
+            "b": 253,
+            "key": "periodic-u:0.2275000",
+            "distance": 0
+          },
+          {
+            "a": 201,
+            "b": 250,
+            "key": "periodic-u:0.1625000",
+            "distance": 0
+          }
+        ],
+        "projectionPairs": [
+          {
+            "a": 3,
+            "b": 18,
+            "key": "projection:xy:1.45794,-0.57600",
+            "depthDistance": 2.7381884237147576,
+            "weld": false
+          },
+          {
+            "a": 4,
+            "b": 17,
+            "key": "projection:xy:1.45794,-0.37920",
+            "depthDistance": 2.7381884237147576,
+            "weld": false
+          },
+          {
+            "a": 5,
+            "b": 16,
+            "key": "projection:xy:1.94474,-0.37920",
+            "depthDistance": 0.9337814554236241,
+            "weld": false
+          },
+          {
+            "a": 6,
+            "b": 15,
+            "key": "projection:xy:1.94474,0.47520",
+            "depthDistance": 0.9337814554236241,
+            "weld": false
+          },
+          {
+            "a": 7,
+            "b": 14,
+            "key": "projection:xy:1.45794,0.47520",
+            "depthDistance": 2.7381884237147576,
+            "weld": false
+          },
+          {
+            "a": 8,
+            "b": 13,
+            "key": "projection:xy:1.45794,0.67200",
+            "depthDistance": 2.7381884237147576,
+            "weld": false
+          }
+        ]
+      },
+      "validation": {
+        "parameterArea": 0.9339399999999998,
+        "triangleParamAreaError": 1.9317880628477724e-14,
+        "parityArea": 0.9372222222222222,
+        "parityAreaError": 0.0032822222222224084,
+        "area3d": 28.46516511452165,
+        "area3dRelativeError": 0.010586809177404906,
+        "parameterBoundaryError": 0,
+        "surfaceBoundaryError3d": 0.00013877802485832242,
+        "stretch": {
+          "uMetersPerUnit": 12.566370614359172,
+          "vMetersPerUnit": 2.4,
+          "areaScale": 30.159289474462014
+        }
+      },
+      "rays": [
+        {
+          "name": "wrapped_hole_negative_side",
+          "u": 0.98125,
+          "v": 0.52,
+          "rayOrigin": [
+            0,
+            0.04800000000000004,
+            0
+          ],
+          "rayDirection": [
+            0.9930684569549262,
+            0,
+            -0.11753739745783855
+          ],
+          "firstHit": null
+        },
+        {
+          "name": "positive_stem_side",
+          "u": 0.01875,
+          "v": 0.52,
+          "rayOrigin": [
+            0,
+            0.04800000000000004,
+            0
+          ],
+          "rayDirection": [
+            0.9930684569549263,
+            0,
+            0.11753739745783792
+          ],
+          "firstHit": null
+        },
+        {
+          "name": "within_epsilon_of_seam",
+          "u": 0.0025,
+          "v": 0.52,
+          "rayOrigin": [
+            0,
+            0.04800000000000004,
+            0
+          ],
+          "rayDirection": [
+            0.9998766324816606,
+            0,
+            0.01570731731182034
+          ],
+          "firstHit": null
+        },
+        {
+          "name": "safe_control_wall",
+          "u": 0.38,
+          "v": 0.52,
+          "rayOrigin": [
+            0,
+            0.04800000000000004,
+            0
+          ],
+          "rayDirection": [
+            -0.728968627421411,
+            0,
+            0.6845471059286892
+          ],
+          "firstHit": {
+            "triangleIndex": 17983,
+            "faceId": "F017984",
+            "regionId": "region-1",
+            "distance": 1.9988881199888737,
+            "point": [
+              -1.457126729197254,
+              0.04800000000000004,
+              1.368333077613622
+            ],
+            "centroidUV": {
+              "u": 0.37333333333333335,
+              "v": 0.5176666666666668
+            }
+          }
+        }
+      ],
+      "lightRays": [
+        {
+          "name": "projection_overlap_stem_gap_front_to_back",
+          "u": 0.01875,
+          "alignedU": 0.98125,
+          "v": 0.52,
+          "rayOrigin": [
+            1.9861369139098526,
+            0.04800000000000004,
+            3.2
+          ],
+          "rayDirection": [
+            0,
+            0,
+            -1
+          ],
+          "transmitsLight": true,
+          "firstHit": null
+        },
+        {
+          "name": "projection_overlap_stem_gap_back_to_front",
+          "u": 0.98125,
+          "alignedU": 0.01875,
+          "v": 0.52,
+          "rayOrigin": [
+            1.9861369139098526,
+            0.04800000000000004,
+            -3.2
+          ],
+          "rayDirection": [
+            0,
+            0,
+            1
+          ],
+          "transmitsLight": true,
+          "firstHit": null
+        },
+        {
+          "name": "projection_overlap_cap_gap_front_to_back",
+          "u": 0.06,
+          "alignedU": 0.94,
+          "v": 0.3,
+          "rayOrigin": [
+            1.8595529717765027,
+            -0.48,
+            3.2
+          ],
+          "rayDirection": [
+            0,
+            0,
+            -1
+          ],
+          "transmitsLight": true,
+          "firstHit": null
+        },
+        {
+          "name": "projection_overlap_cap_gap_back_to_front",
+          "u": 0.94,
+          "alignedU": 0.06,
+          "v": 0.3,
+          "rayOrigin": [
+            1.8595529717765027,
+            -0.48,
+            -3.2
+          ],
+          "rayDirection": [
+            0,
+            0,
+            1
+          ],
+          "transmitsLight": true,
+          "firstHit": null
+        }
+      ]
+    },
+    "after": {
+      "ok": true,
+      "phase": "after",
+      "holeCount": 1,
+      "counts": {
+        "definedHoles": 1,
+        "topologicalHoles": 1,
+        "canonicalPolygons": 1,
+        "canonicalRings": 1
+      },
+      "stats": {
+        "sourceVertexCount": 9537,
+        "spatialVertexCount": 9471,
+        "triangleCount": 18432,
+        "periodicPairCount": 66,
+        "weldCount": 66,
+        "projectionOnlyPairCount": 4,
+        "boundaryEdgeCount": 640,
+        "degenerateWeldFaceCount": 0
+      },
+      "seamReport": {
+        "hole": {
+          "touchesSeam": true,
+          "crossingCount": 3,
+          "canonicalStrategy": "split-at-seam",
+          "periodicStrategy": "trace-across-seam",
+          "seamEdgeCount": 1
+        }
+      },
+      "identity": {
+        "periodicPairCount": 66,
+        "weldCount": 66,
+        "redundantWeldCount": 0,
+        "projectionOnlyPairCount": 4,
+        "periodicPairs": [
+          {
+            "a": 0,
+            "b": 1,
+            "key": "periodic-u:0.0000000",
+            "distance": 0
+          },
+          {
+            "a": 11,
+            "b": 10,
+            "key": "periodic-u:1.0000000",
+            "distance": 0
+          },
+          {
+            "a": 12,
+            "b": 9,
+            "key": "periodic-u:0.7800000",
+            "distance": 0
+          },
+          {
+            "a": 19,
+            "b": 2,
+            "key": "periodic-u:0.2600000",
+            "distance": 0
+          },
+          {
+            "a": 21,
+            "b": 25,
+            "key": "periodic-u:0.1300000",
+            "distance": 0
+          },
+          {
+            "a": 38,
+            "b": 34,
+            "key": "periodic-u:0.8900000",
+            "distance": 0
+          },
+          {
+            "a": 61,
+            "b": 76,
+            "key": "periodic-u:0.1950000",
+            "distance": 0
+          },
+          {
+            "a": 64,
+            "b": 73,
+            "key": "periodic-u:0.0650000",
+            "distance": 0
+          },
+          {
+            "a": 114,
+            "b": 105,
+            "key": "periodic-u:0.9450000",
+            "distance": 0
+          },
+          {
+            "a": 117,
+            "b": 102,
+            "key": "periodic-u:0.8350000",
+            "distance": 0
+          },
+          {
+            "a": 198,
+            "b": 253,
+            "key": "periodic-u:0.2275000",
+            "distance": 0
+          },
+          {
+            "a": 201,
+            "b": 250,
+            "key": "periodic-u:0.1625000",
+            "distance": 0
+          }
+        ],
+        "projectionPairs": [
+          {
+            "a": 3,
+            "b": 18,
+            "key": "projection:xy:1.45794,-0.57600",
+            "depthDistance": 2.7381884237147576,
+            "weld": false
+          },
+          {
+            "a": 4,
+            "b": 17,
+            "key": "projection:xy:1.45794,-0.37920",
+            "depthDistance": 2.7381884237147576,
+            "weld": false
+          },
+          {
+            "a": 7,
+            "b": 14,
+            "key": "projection:xy:1.45794,0.47520",
+            "depthDistance": 2.7381884237147576,
+            "weld": false
+          },
+          {
+            "a": 8,
+            "b": 13,
+            "key": "projection:xy:1.45794,0.67200",
+            "depthDistance": 2.7381884237147576,
+            "weld": false
+          }
+        ]
+      },
+      "validation": {
+        "parameterArea": 0.9472899999999999,
+        "triangleParamAreaError": 3.9968028886505635e-14,
+        "parityArea": 0.9491666666666667,
+        "parityAreaError": 0.0018766666666668597,
+        "area3d": 28.867771510541196,
+        "area3dRelativeError": 0.0104369068496321,
+        "parameterBoundaryError": 0,
+        "surfaceBoundaryError3d": 0.00013877802485832242,
+        "stretch": {
+          "uMetersPerUnit": 12.566370614359172,
+          "vMetersPerUnit": 2.4,
+          "areaScale": 30.159289474462014
+        }
+      },
+      "rays": [
+        {
+          "name": "wrapped_hole_negative_side",
+          "u": 0.98125,
+          "v": 0.52,
+          "rayOrigin": [
+            0,
+            0.04800000000000004,
+            0
+          ],
+          "rayDirection": [
+            0.9930684569549262,
+            0,
+            -0.11753739745783855
+          ],
+          "firstHit": null
+        },
+        {
+          "name": "positive_stem_side",
+          "u": 0.01875,
+          "v": 0.52,
+          "rayOrigin": [
+            0,
+            0.04800000000000004,
+            0
+          ],
+          "rayDirection": [
+            0.9930684569549263,
+            0,
+            0.11753739745783792
+          ],
+          "firstHit": {
+            "triangleIndex": 8773,
+            "faceId": "F008774",
+            "regionId": "region-1",
+            "distance": 2,
+            "point": [
+              1.9861369139098526,
+              0.04800000000000004,
+              0.23507479491567584
+            ],
+            "centroidUV": {
+              "u": 0.016250000000000014,
+              "v": 0.5162916666666667
+            }
+          }
+        },
+        {
+          "name": "within_epsilon_of_seam",
+          "u": 0.0025,
+          "v": 0.52,
+          "rayOrigin": [
+            0,
+            0.04800000000000004,
+            0
+          ],
+          "rayDirection": [
+            0.9998766324816606,
+            0,
+            0.01570731731182034
+          ],
+          "firstHit": {
+            "triangleIndex": 8789,
+            "faceId": "F008790",
+            "regionId": "region-1",
+            "distance": 1.9998766305791589,
+            "point": [
+              1.9996299107622593,
+              0.04800000000000004,
+              0.03141269682100095
+            ],
+            "centroidUV": {
+              "u": 0.0012500000000000011,
+              "v": 0.5162916666666667
+            }
+          }
+        },
+        {
+          "name": "safe_control_wall",
+          "u": 0.38,
+          "v": 0.52,
+          "rayOrigin": [
+            0,
+            0.04800000000000004,
+            0
+          ],
+          "rayDirection": [
+            -0.728968627421411,
+            0,
+            0.6845471059286892
+          ],
+          "firstHit": {
+            "triangleIndex": 17983,
+            "faceId": "F017984",
+            "regionId": "region-1",
+            "distance": 1.9988881199888737,
+            "point": [
+              -1.457126729197254,
+              0.04800000000000004,
+              1.368333077613622
+            ],
+            "centroidUV": {
+              "u": 0.37333333333333335,
+              "v": 0.5176666666666668
+            }
+          }
+        }
+      ],
+      "lightRays": [
+        {
+          "name": "projection_overlap_stem_gap_front_to_back",
+          "u": 0.01875,
+          "alignedU": 0.98125,
+          "v": 0.52,
+          "rayOrigin": [
+            1.9861369139098526,
+            0.04800000000000004,
+            3.2
+          ],
+          "rayDirection": [
+            0,
+            0,
+            -1
+          ],
+          "transmitsLight": false,
+          "firstHit": {
+            "triangleIndex": 8773,
+            "faceId": "F008774",
+            "regionId": "region-1",
+            "distance": 2.9649252050843242,
+            "point": [
+              1.9861369139098526,
+              0.04800000000000004,
+              0.23507479491567596
+            ],
+            "centroidUV": {
+              "u": 0.016250000000000014,
+              "v": 0.5162916666666667
+            }
+          }
+        },
+        {
+          "name": "projection_overlap_stem_gap_back_to_front",
+          "u": 0.98125,
+          "alignedU": 0.01875,
+          "v": 0.52,
+          "rayOrigin": [
+            1.9861369139098526,
+            0.04800000000000004,
+            -3.2
+          ],
+          "rayDirection": [
+            0,
+            0,
+            1
+          ],
+          "transmitsLight": false,
+          "firstHit": {
+            "triangleIndex": 9061,
+            "faceId": "F009062",
+            "regionId": "region-1",
+            "distance": 3.435074794915676,
+            "point": [
+              1.9861369139098526,
+              0.04800000000000004,
+              0.23507479491567596
+            ],
+            "centroidUV": {
+              "u": 0.017500000000000016,
+              "v": 0.5237083333333333
+            }
+          }
+        },
+        {
+          "name": "projection_overlap_cap_gap_front_to_back",
+          "u": 0.06,
+          "alignedU": 0.94,
+          "v": 0.3,
+          "rayOrigin": [
+            1.8595529717765027,
+            -0.48,
+            3.2
+          ],
+          "rayDirection": [
+            0,
+            0,
+            -1
+          ],
+          "transmitsLight": true,
+          "firstHit": null
+        },
+        {
+          "name": "projection_overlap_cap_gap_back_to_front",
+          "u": 0.94,
+          "alignedU": 0.06,
+          "v": 0.3,
+          "rayOrigin": [
+            1.8595529717765027,
+            -0.48,
+            -3.2
+          ],
+          "rayDirection": [
+            0,
+            0,
+            1
+          ],
+          "transmitsLight": true,
+          "firstHit": null
+        }
+      ]
+    }
+  },
+  "equalAreaGuard": {
+    "areas": [
+      0.0128,
+      0.0128
+    ],
+    "comment": "Equal hole area does not imply equal topology; first inside-out radial hit differs.",
+    "holeAtU25": {
+      "rayU": 0.24,
+      "firstFace": null
+    },
+    "wallAtU74ForFirstModel": {
+      "rayU": 0.74,
+      "firstFace": "F000256"
+    },
+    "holeAtU74": {
+      "rayU": 0.74,
+      "firstFace": null
+    },
+    "wallAtU24ForSecondModel": {
+      "rayU": 0.24,
+      "firstFace": "F000293"
+    }
+  }
+}

@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>参数曲面裁边建模工具 · 圆筒字母孔</title>
+  <link rel="stylesheet" href="./style.css" />
+</head>
+<body>
+  <header class="topbar">
+    <div>
+      <h1>参数曲面裁边建模工具</h1>
+      <p>圆筒侧面 I 字母孔 · 周期缝身份 / 投影重合分离 · 有效面域显示与 OBJ 导出共用同一 mesh</p>
+    </div>
+    <div class="actions">
+      <button id="animateDrag" class="primary">演示：把右竖边拖到缝上</button>
+      <button id="resetBefore">重置拖动前</button>
+      <label class="check"><input id="edit3D" type="checkbox" /> 3D 曲面直接拖点</label>
+    </div>
+  </header>
+
+  <main class="layout">
+    <section class="panel param-panel">
+      <div class="panel-head">
+        <h2>参数域 / 有效面域</h2>
+        <span id="paramStatus" class="badge"></span>
+      </div>
+      <canvas id="paramCanvas" width="620" height="620"></canvas>
+      <p class="hint">拖动白色顶点或橙色边；红色虚线是 u=0/1 参数缝。绿色填充来自多边形布尔求出的有效面域，不是透明贴图。</p>
+      <div class="save-row">
+        <button id="saveDefinition">保存裁边定义 JSON</button>
+        <button id="saveReport">保存审计 JSON</button>
+      </div>
+    </section>
+
+    <section class="panel viewport-panel">
+      <div class="panel-head">
+        <h2>圆筒显示网格与内部射线</h2>
+        <span id="meshStatus" class="badge"></span>
+      </div>
+      <canvas id="viewCanvas" width="760" height="680"></canvas>
+      <p class="hint">默认拖动旋转；勾选“3D 曲面直接拖点”后，在圆筒上拖动白色裁边点。黄线为筒内向外审计射线。</p>
+      <div class="save-row">
+        <button id="saveOBJ" class="primary">保存实际模型 OBJ</button>
+        <a href="/deliverables/letter-I-seam.before.trim.json" target="_blank">拖动前定义</a>
+        <a href="/deliverables/letter-I-seam.after.obj" target="_blank">拖动后 OBJ</a>
+        <a href="/deliverables/seam-drag-report.json" target="_blank">已保存报告</a>
+      </div>
+    </section>
+
+    <aside class="panel report-panel">
+      <h2>拓扑与交叉验证</h2>
+      <div id="metrics" class="metrics"></div>
+      <h3>内部向外射线首命中面</h3>
+      <div id="rays" class="rays"></div>
+      <h3>身份账本</h3>
+      <pre id="identity" class="code"></pre>
+      <h3>政策</h3>
+      <ul class="policy">
+        <li>外轮廓 CCW、孔洞 CW；嵌套深度按奇偶决定外/孔。</li>
+        <li>自交、零点数和零面积环直接拒绝，不导出完整未裁曲面。</li>
+        <li>跨缝边按最短周期增量提升后细分；canonical 域拆环显示，lifted 坐标跨缝追踪。</li>
+        <li>u=0 与 u=1 只按周期身份缝合一次；屏幕投影重合但 xyz 不同的点保持分离。</li>
+        <li>射线奇偶、UV 三角面积、3D 面积和边界 Hausdorff 误差共同校验。</li>
+      </ul>
+    </aside>
+  </main>
+
+  <script type="module" src="./app.js"></script>
+</body>
+</html>

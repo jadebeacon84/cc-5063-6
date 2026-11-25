@@ -1,0 +1,20 @@
+{
+  "name": "parametric-trim-tool",
+  "version": "1.0.0",
+  "description": "Seam-aware parametric surface trimming and mesh delivery tool",
+  "type": "module",
+  "main": "src/index.js",
+  "scripts": {
+    "test": "node --test test/*.test.js",
+    "start": "node scripts/serve.mjs",
+    "build:vendor": "esbuild node_modules/polygon-clipping/dist/polygon-clipping.esm.js --bundle --format=esm --outfile=vendor/polygon-clipping.bundle.js",
+    "deliver": "node scripts/deliver.mjs"
+  },
+  "dependencies": {
+    "earcut": "^3.2.4",
+    "polygon-clipping": "^0.15.7"
+  },
+  "devDependencies": {
+    "esbuild": "^0.28.2"
+  }
+}
