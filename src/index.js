@@ -7,3 +7,5 @@ export * from './raycast.js';
 export * from './metrics.js';
 export * from './serialize.js';
 export * from './scenario.js';
+export * from './acceleration.js';
+export * from './commit.js';

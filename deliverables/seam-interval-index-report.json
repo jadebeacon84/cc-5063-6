@@ -1,0 +1,410 @@
+{
+  "schema": "seam-interval-index-report/v1",
+  "generatedAt": "2026-11-26T07:48:39.552Z",
+  "policies": {
+    "broadPhase": "1D interval trees on U and V; AABB intersection is necessary but not sufficient for seam routing",
+    "seamDecision": "Shortest lifted traversal, directed seam passages, and directed seam-edge interior side decide one tile versus two jointly queried sides",
+    "staleComputation": "CommitGuard generation plus AbortSignal; stale resolutions are reported stale and cannot commit",
+    "falseCull": "A triangle is erroneous culling only when bbox occlusion removes it but full-sheet reclip keeps it"
+  },
+  "equalBBoxPair": {
+    "bbox": {
+      "minU": 0,
+      "maxU": 0.9,
+      "minV": 0.4,
+      "maxV": 0.6
+    },
+    "crossing": {
+      "directedClass": "true-seam-crossing",
+      "locality": "two-sided-joint",
+      "indexDecision": "query-both-seam-sides-jointly",
+      "passages": 2,
+      "queryRegions": [
+        {
+          "id": "period--1",
+          "side": "u=0",
+          "uInterval": [
+            0,
+            0.100001
+          ],
+          "vInterval": [
+            0.39999900000000005,
+            0.600001
+          ]
+        },
+        {
+          "id": "period-0",
+          "side": "u=1",
+          "uInterval": [
+            0.899999,
+            1
+          ],
+          "vInterval": [
+            0.39999900000000005,
+            0.600001
+          ]
+        }
+      ]
+    },
+    "foldback": {
+      "directedClass": "seam-foldback",
+      "locality": "single-tile",
+      "indexDecision": "query-one-directed-tile",
+      "seamEdges": 1,
+      "queryRegions": [
+        {
+          "id": "period-0",
+          "side": "u=0",
+          "uInterval": [
+            0,
+            0.000001
+          ],
+          "vInterval": [
+            0.39999900000000005,
+            0.600001
+          ]
+        },
+        {
+          "id": "period-1",
+          "side": "u=1",
+          "uInterval": [
+            0.699999,
+            1
+          ],
+          "vInterval": [
+            0.39999900000000005,
+            0.600001
+          ]
+        }
+      ]
+    }
+  },
+  "seamPicking": {
+    "exportedOBJVertices": 474,
+    "exportedOBJTriangles": 928,
+    "insideHoleAtUV": {
+      "u": 0,
+      "v": 0.47,
+      "firstHit": null
+    },
+    "outsideHoleAtUV": {
+      "u": 0,
+      "v": 0.2,
+      "firstHit": {
+        "triangleIndex": 33,
+        "t": 1.9999999999999998
+      }
+    }
+  },
+  "adversarial": {
+    "ok": true,
+    "parameterArea": 0.9279999856000001,
+    "holes": [
+      {
+        "holeId": "tiny-hole",
+        "candidateEdgeCount": 0,
+        "exactIntersectionCount": 0,
+        "coincidentIntersectionCount": 0,
+        "tangentIntersectionCount": 0,
+        "missedIntersectionCount": 0,
+        "complete": true
+      },
+      {
+        "holeId": "tangent-a",
+        "candidateEdgeCount": 2,
+        "exactIntersectionCount": 4,
+        "coincidentIntersectionCount": 0,
+        "tangentIntersectionCount": 2,
+        "missedIntersectionCount": 0,
+        "complete": true
+      },
+      {
+        "holeId": "tangent-b",
+        "candidateEdgeCount": 2,
+        "exactIntersectionCount": 4,
+        "coincidentIntersectionCount": 0,
+        "tangentIntersectionCount": 2,
+        "missedIntersectionCount": 0,
+        "complete": true
+      },
+      {
+        "holeId": "shared-a",
+        "candidateEdgeCount": 6,
+        "exactIntersectionCount": 14,
+        "coincidentIntersectionCount": 2,
+        "tangentIntersectionCount": 8,
+        "missedIntersectionCount": 0,
+        "complete": true
+      },
+      {
+        "holeId": "shared-right",
+        "candidateEdgeCount": 5,
+        "exactIntersectionCount": 11,
+        "coincidentIntersectionCount": 1,
+        "tangentIntersectionCount": 6,
+        "missedIntersectionCount": 0,
+        "complete": true
+      },
+      {
+        "holeId": "shared-top",
+        "candidateEdgeCount": 5,
+        "exactIntersectionCount": 11,
+        "coincidentIntersectionCount": 1,
+        "tangentIntersectionCount": 6,
+        "missedIntersectionCount": 0,
+        "complete": true
+      }
+    ],
+    "prepared": {
+      "tinyHole": "1.2e-4 UV square",
+      "tangentEdges": "corner tangent pair",
+      "coincidentEdgePairs": 2
+    }
+  },
+  "movedInnerRing": {
+    "timing": {
+      "globalFullClipMs": 19.054,
+      "localInvalidationMs": 6.956,
+      "globalAverageMs": 0.4763,
+      "localAverageMs": 0.1739,
+      "speedup": 2.74,
+      "globalChecksum": 39.48800000000003,
+      "localChecksum": 2640
+    },
+    "indexedEdgeCount": 800,
+    "candidateEdgeCount": 34,
+    "exactIntersectionCount": 32,
+    "completeness": {
+      "bruteForceIntersectionCount": 32,
+      "missedIntersectionCount": 0,
+      "complete": true
+    },
+    "faceInvalidation": {
+      "triangleCount": 512,
+      "candidateFaceCount": 30,
+      "skippedFaceCount": 482,
+      "skippedArea": 0.9365375000000059,
+      "erroneouslyExcludedFaceCount": 0,
+      "erroneousExclusionArea": 0,
+      "erroneousFaces": []
+    },
+    "falseDeletionArea": 0,
+    "generatedTriangleCount": 512,
+    "generatedTriangleArea": 0.9872000000000007,
+    "fullReclipArea": 0.9872,
+    "areaDifference": 7.771561172376096e-16
+  },
+  "falseBBoxGuard": {
+    "ring": {
+      "id": "bbox-spans-seam-but-spatially-disjoint",
+      "role": "guard",
+      "points": [
+        {
+          "u": 0.9,
+          "v": 0.4
+        },
+        {
+          "u": 0,
+          "v": 0.45
+        },
+        {
+          "u": 0.1,
+          "v": 0.6
+        }
+      ],
+      "movedPoint": null
+    },
+    "candidateSources": {
+      "before": {
+        "phase": "before",
+        "movedPoint": null,
+        "directedClass": "true-seam-crossing",
+        "locality": "two-sided-joint",
+        "regions": [
+          {
+            "id": "period--1",
+            "shift": -1,
+            "side": "u=0",
+            "uInterval": [
+              0,
+              0.100001
+            ],
+            "vInterval": [
+              0.39999900000000005,
+              0.600001
+            ]
+          },
+          {
+            "id": "period-0",
+            "shift": 0,
+            "side": "u=1",
+            "uInterval": [
+              0.899999,
+              1
+            ],
+            "vInterval": [
+              0.39999900000000005,
+              0.600001
+            ]
+          }
+        ],
+        "targets": [
+          {
+            "target": "distant-central-face",
+            "rectangleSource": [
+              "canonical-bbox-intersection"
+            ],
+            "directedSources": [
+              "excluded-by-directed-lift"
+            ],
+            "edgeCandidateCount": 0,
+            "faceCandidate": false
+          },
+          {
+            "target": "positive-seam-side-face",
+            "rectangleSource": [
+              "canonical-bbox-intersection"
+            ],
+            "directedSources": [
+              "directed-interval-index",
+              "period--1"
+            ],
+            "edgeCandidateCount": 3,
+            "faceCandidate": true
+          },
+          {
+            "target": "negative-seam-side-face",
+            "rectangleSource": [],
+            "directedSources": [
+              "directed-interval-index",
+              "period-0"
+            ],
+            "edgeCandidateCount": 3,
+            "faceCandidate": true
+          }
+        ]
+      },
+      "after": {
+        "phase": "after",
+        "movedPoint": {
+          "pointIndex": 1,
+          "from": {
+            "u": 0,
+            "v": 0.45
+          },
+          "to": {
+            "u": 0,
+            "v": 0.48
+          }
+        },
+        "directedClass": "true-seam-crossing",
+        "locality": "two-sided-joint",
+        "regions": [
+          {
+            "id": "period--1",
+            "shift": -1,
+            "side": "u=0",
+            "uInterval": [
+              0,
+              0.100001
+            ],
+            "vInterval": [
+              0.39999900000000005,
+              0.600001
+            ]
+          },
+          {
+            "id": "period-0",
+            "shift": 0,
+            "side": "u=1",
+            "uInterval": [
+              0.899999,
+              1
+            ],
+            "vInterval": [
+              0.39999900000000005,
+              0.600001
+            ]
+          }
+        ],
+        "targets": [
+          {
+            "target": "distant-central-face",
+            "rectangleSource": [
+              "canonical-bbox-intersection"
+            ],
+            "directedSources": [
+              "excluded-by-directed-lift"
+            ],
+            "edgeCandidateCount": 0,
+            "faceCandidate": false
+          },
+          {
+            "target": "positive-seam-side-face",
+            "rectangleSource": [
+              "canonical-bbox-intersection"
+            ],
+            "directedSources": [
+              "directed-interval-index",
+              "period--1"
+            ],
+            "edgeCandidateCount": 3,
+            "faceCandidate": true
+          },
+          {
+            "target": "negative-seam-side-face",
+            "rectangleSource": [],
+            "directedSources": [
+              "directed-interval-index",
+              "period-0"
+            ],
+            "edgeCandidateCount": 3,
+            "faceCandidate": true
+          }
+        ]
+      }
+    },
+    "culling": {
+      "baseTriangleCount": 2048,
+      "rectangleOccludedTriangleCount": 348,
+      "rectangleOccludedArea": 0.169921875,
+      "correctRemovedTriangleCount": 10,
+      "correctRemovedArea": 0.0048828125,
+      "falseCulledTriangleCount": 344,
+      "falseCulledArea": 0.16796875,
+      "falseCulledTriangleIds": [
+        "F000163",
+        "F000167",
+        "F000169",
+        "F000170",
+        "F000171",
+        "F000172",
+        "F000174",
+        "F000175",
+        "F000176",
+        "F000419",
+        "F000423",
+        "F000425",
+        "F000426",
+        "F000427",
+        "F000428",
+        "F000430",
+        "F000431",
+        "F000432",
+        "F000513",
+        "F000514",
+        "F000515",
+        "F000516",
+        "F000517",
+        "F000518",
+        "F000519",
+        "F000520",
+        "F000521",
+        "F000522",
+        "F000524",
+        "F000525"
+      ],
+      "rule": "Only rectangle-occluded triangles that remain visible in the full reclip are counted as erroneous culling."
+    }
+  }
+}

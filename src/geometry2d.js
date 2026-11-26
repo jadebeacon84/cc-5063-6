@@ -219,3 +219,69 @@ export function sampleRing(ring, count = 256) {
 export function triangleArea2(a, b, c) {
   return 0.5 * Math.abs((b.u - a.u) * (c.v - a.v) - (c.u - a.u) * (b.v - a.v));
 }
+
+export function segmentIntersectionDetails(a, b, c, d, tolerance = 1e-9) {
+  const rx = b.u - a.u;
+  const ry = b.v - a.v;
+  const sx = d.u - c.u;
+  const sy = d.v - c.v;
+  const denominator = rx * sy - ry * sx;
+  const ca = cross(a, b, c);
+  const cb = cross(a, b, d);
+  const cc = cross(c, d, a);
+  const cd = cross(c, d, b);
+
+  if (Math.abs(denominator) <= tolerance) {
+    if (Math.abs(ca) > tolerance || Math.abs(cc) > tolerance) return { type: 'none', points: [] };
+
+    const r2 = rx * rx + ry * ry;
+    if (r2 <= tolerance) {
+      return onSegment(a, c, d, tolerance)
+        ? { type: 'point', kind: 'degenerate-a', points: [{ u: a.u, v: a.v }] }
+        : { type: 'none', points: [] };
+    }
+    const project = (p) => ((p.u - a.u) * rx + (p.v - a.v) * ry) / r2;
+    let t0 = 0;
+    let t1 = 1;
+    let tc = project(c);
+    let td = project(d);
+    let lo = Math.max(t0, Math.min(tc, td));
+    let hi = Math.min(t1, Math.max(tc, td));
+    if (hi < lo - tolerance) return { type: 'none', points: [] };
+    lo = Math.max(0, lo);
+    hi = Math.min(1, hi);
+    if (hi - lo <= tolerance) {
+      const t = (lo + hi) * 0.5;
+      return {
+        type: 'point',
+        kind: 'collinear-touch',
+        points: [{ u: a.u + rx * t, v: a.v + ry * t }]
+      };
+    }
+    const pointAt = (t) => ({ u: a.u + rx * t, v: a.v + ry * t });
+    return {
+      type: 'coincident',
+      overlapLength: Math.hypot(rx * (hi - lo), ry * (hi - lo)),
+      interval: [lo, hi],
+      points: [pointAt(lo), pointAt(hi)]
+    };
+  }
+
+  const t = ((c.u - a.u) * sy - (c.v - a.v) * sx) / denominator;
+  const u = ((c.u - a.u) * ry - (c.v - a.v) * rx) / denominator;
+  const eps = tolerance;
+  if (t < -eps || t > 1 + eps || u < -eps || u > 1 + eps) return { type: 'none', points: [] };
+  const tt = Math.max(0, Math.min(1, t));
+  const uu = Math.max(0, Math.min(1, u));
+  const endpoint = tt <= eps || tt >= 1 - eps || uu <= eps || uu >= 1 - eps;
+  const tangent = endpoint && (
+    Math.abs(ca) <= tolerance || Math.abs(cb) <= tolerance ||
+    Math.abs(cc) <= tolerance || Math.abs(cd) <= tolerance
+  );
+  return {
+    type: 'point',
+    kind: tangent ? 'tangent' : 'crossing',
+    parameters: { t: tt, u: uu },
+    points: [{ u: a.u + rx * tt, v: a.v + ry * tt }]
+  };
+}

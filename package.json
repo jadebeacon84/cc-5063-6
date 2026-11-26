@@ -5,10 +5,12 @@
   "type": "module",
   "main": "src/index.js",
   "scripts": {
+    "pretest": "npm run build:vendor",
     "test": "node --test test/*.test.js",
     "start": "node scripts/serve.mjs",
-    "build:vendor": "esbuild node_modules/polygon-clipping/dist/polygon-clipping.esm.js --bundle --format=esm --outfile=vendor/polygon-clipping.bundle.js",
-    "deliver": "node scripts/deliver.mjs"
+    "build:vendor": "esbuild node_modules/polygon-clipping/dist/polygon-clipping.esm.js --bundle --format=esm --outfile=vendor/polygon-clipping.bundle.js && esbuild node_modules/earcut/src/earcut.js --bundle --format=esm --outfile=vendor/earcut.js",
+    "report:seam-index": "node scripts/seam-index-report.mjs",
+    "deliver": "node scripts/deliver.mjs && node scripts/seam-index-report.mjs"
   },
   "dependencies": {
     "earcut": "^3.2.4",

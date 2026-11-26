@@ -24,6 +24,31 @@ export function meshToOBJ(mesh, { objectName = 'trimmed_cylinder_letter' } = {})
   return lines.join('\n') + '\n';
 }
 
+export function parseOBJMesh(text) {
+  const positions = [];
+  const indices = [];
+  for (const line of text.split(/\r?\n/)) {
+    if (line.startsWith('v ')) {
+      const parts = line.trim().split(/\s+/).slice(1).map(Number);
+      positions.push([parts[0], parts[1], parts[2]]);
+    } else if (line.startsWith('f ')) {
+      const tokens = line.trim().split(/\s+/).slice(1);
+      const faceIndices = tokens.map((token) => {
+        const vertexToken = token.split('/')[0];
+        const parsed = Number(vertexToken);
+        return parsed < 0 ? positions.length + parsed : parsed - 1;
+      });
+      for (let i = 1; i < faceIndices.length - 1; i++) {
+        indices.push(faceIndices[0], faceIndices[i], faceIndices[i + 1]);
+      }
+    }
+  }
+  return { positions, indices };
+}
+
+export const parseOBJ = parseOBJMesh;
+export const importOBJ = parseOBJMesh;
+
 export function downloadBlob(filename, text, type = 'application/json') {
   const blob = new Blob([text], { type });
   const url = URL.createObjectURL(blob);

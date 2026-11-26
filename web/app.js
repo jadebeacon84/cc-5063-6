@@ -2,6 +2,9 @@ import { makeSeamDefinition, auditDefinition, letterIPoints, LETTER_I } from '..
 import { validateDefinition } from '../src/trim.js';
 import { meshToOBJ, downloadBlob } from '../src/serialize.js';
 import { auditToReport } from '../src/report.js';
+import { CommitGuard } from '../src/commit.js';
+import { CandidateIndex, classifyDirectedSeamLoop, evaluateClipLocality } from '../src/acceleration.js';
+import { triangleUVArea } from '../src/metrics.js';
 
 const paramCanvas = document.querySelector('#paramCanvas');
 const paramCtx = paramCanvas.getContext('2d');
@@ -17,12 +20,36 @@ const state = {
   drag: null,
   frame: 0,
   valid: true,
-  selectedEdge: { contourIndex: 0, edgeIndex: 3 }
+  selectedEdge: { contourIndex: 0, edgeIndex: 3 },
+  commitGuard: new CommitGuard(),
+  dragToken: null,
+  faceIndex: null,
+  contourIndex: null,
+  locality: null
 };
 
 function clamp(x, a, b) { return Math.max(a, Math.min(b, x)); }
 
+function yieldForCancellation(token) {
+  return new Promise((resolve) => {
+    if (typeof requestAnimationFrame !== 'function') {
+      setTimeout(resolve, 0);
+      return;
+    }
+    const handle = requestAnimationFrame(() => {
+      token.signal.removeEventListener('abort', onAbort);
+      resolve();
+    });
+    const onAbort = () => {
+      cancelAnimationFrame(handle);
+      resolve();
+    };
+    token.signal.addEventListener('abort', onAbort, { once: true });
+  });
+}
+
 async function rebuild(options = { refineIterations: 4, parityGrid: 80 }) {
+  const token = options.token ?? state.commitGuard.begin(options.reason ?? 'rebuild');
   const validation = validateDefinition(state.definition);
   const status = document.querySelector('#paramStatus');
   const meshStatus = document.querySelector('#meshStatus');
@@ -32,41 +59,58 @@ async function rebuild(options = { refineIterations: 4, parityGrid: 80 }) {
     status.classList.add('error');
     meshStatus.textContent = '当前环无效：已阻止 OBJ / 审计导出';
     meshStatus.classList.add('error');
-    renderParameter();
-    return;
+    if (token.isCurrent()) renderParameter();
+    return { stale: false, valid: false };
   }
+  if (options.yield !== false) await yieldForCancellation(token);
+  if (!token.isCurrent()) return { stale: true, accepted: false };
+
   status.classList.remove('error');
   meshStatus.classList.remove('error');
   status.textContent = '有效';
   state.valid = true;
   const audit = auditDefinition(state.definition, options);
+  if (!token.isCurrent()) return { stale: true, accepted: false };
   if (!audit.ok) {
     state.valid = false;
     status.textContent = '几何构建失败';
     status.classList.add('error');
     meshStatus.textContent = '几何构建失败：已阻止导出';
     meshStatus.classList.add('error');
-    return;
+    return { stale: false, valid: false };
   }
+  const receipt = state.commitGuard.commit(token, audit);
+  if (!receipt.accepted) return { stale: true, accepted: false };
+
   state.audit = audit;
+  state.faceIndex = CandidateIndex.fromMesh(audit.mesh);
+  state.contourIndex = CandidateIndex.fromRings([
+    state.definition.outer ?? { id: 'outer-domain', points: [] },
+    ...(state.definition.holes ?? [])
+  ].filter(Boolean));
   meshStatus.textContent = `${audit.stats.triangleCount} 三角片 · ${audit.stats.spatialVertexCount} 空间顶点`;
   renderParameter();
   renderView();
   renderReport();
+  return { stale: false, accepted: true, audit };
 }
 
 function scheduleRebuild() {
+  state.dragToken = state.commitGuard.begin('drag-preview');
   if (state.frame) return;
   state.frame = requestAnimationFrame(() => {
     state.frame = 0;
-    rebuild({ refineIterations: 3, parityGrid: 50 });
+    rebuild({ refineIterations: 3, parityGrid: 50, token: state.dragToken });
   });
 }
 
 function cancelScheduledRebuild() {
-  if (!state.frame) return;
-  cancelAnimationFrame(state.frame);
-  state.frame = 0;
+  if (state.frame) {
+    cancelAnimationFrame(state.frame);
+    state.frame = 0;
+  }
+  state.commitGuard.cancel();
+  state.dragToken = null;
 }
 
 const padding = 46;
@@ -223,6 +267,44 @@ function renderParameter() {
       ctx.strokeStyle = '#7c2d12'; ctx.lineWidth = 2; ctx.stroke();
     });
   });
+
+  renderIndexStats();
+}
+
+function renderIndexStats() {
+  const el = document.querySelector('#indexStats');
+  if (!el) return;
+  const contourIndex = state.selectedEdge.contourIndex;
+  const ring = state.definition.holes?.[contourIndex]?.points;
+  if (!ring || !state.faceIndex) {
+    el.innerHTML = '<div class="metric"><span class="k">区间索引</span><span class="v">等待网格</span></div>';
+    return;
+  }
+
+  const classification = classifyDirectedSeamLoop(ring);
+  const candidateFaces = state.faceIndex.queryFaces(classification.queryRegions);
+  const targetRings = [
+    state.definition.outer,
+    ...(state.definition.holes ?? []).filter((_, i) => i !== contourIndex)
+  ].filter(Boolean);
+  const targetIndex = CandidateIndex.fromRings(targetRings);
+  let locality = null;
+  try {
+    locality = evaluateClipLocality(ring, targetIndex, { periodic: true });
+  } catch {
+    locality = null;
+  }
+  const totalFaces = state.faceIndex.faces.length;
+  const area = state.audit ? triangleUVArea(state.audit.mesh) : 0;
+  el.innerHTML = [
+    metric('有向绕行', classification.directedClass),
+    metric('求交决策', classification.indexDecision),
+    metric('候选面片', `${candidateFaces.length} / ${totalFaces}`),
+    metric('排除远处面片', totalFaces - candidateFaces.length),
+    metric('候选边 / 精确求交', `${locality?.candidateEdgeCount ?? 0} / ${locality?.exactIntersectionCount ?? 0}`),
+    metric('生成三角面积', area.toFixed(6)),
+    metric('提交代数', String(state.commitGuard.generation))
+  ].join('');
 }
 
 function pixelDistanceToSegment(p, a, b) {
@@ -291,6 +373,7 @@ paramCanvas.addEventListener('pointermove', (event) => {
     contour.points[j] = { ...drag.original[1], u: clamp(drag.original[1].u + du, 0, 1), v: clamp(drag.original[1].v + dv, 0, 1) };
   }
   scheduleRebuild();
+  renderIndexStats();
 });
 
 async function endDrag(event) {
@@ -451,6 +534,7 @@ viewCanvas.addEventListener('pointermove', (event) => {
       point.u = clamp(hit.u, 0, 1);
       point.v = clamp(hit.v, 0, 1);
       scheduleRebuild();
+      renderIndexStats();
     }
   }
 });
